@@ -55,7 +55,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
-                className="!mt-0 pr-12"
+                className="mt-0! pr-12"
               />
               <button
                 type="button"

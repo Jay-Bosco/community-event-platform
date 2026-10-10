@@ -28,7 +28,7 @@ export function FlashBanner() {
   const isSuccess = message.kind === "success";
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-[80] flex justify-center px-3 pt-3 sm:pt-4">
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-80 flex justify-center px-3 pt-3 sm:pt-4">
       <div
         role="status"
         aria-live="polite"

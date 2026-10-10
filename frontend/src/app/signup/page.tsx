@@ -117,7 +117,7 @@ export default function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
-                className="!mt-0 pr-12"
+                className="mt-0! pr-12"
                 aria-describedby="password-requirements"
               />
               <button
@@ -153,7 +153,7 @@ export default function SignupPage() {
                         className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold ${
                           check.met
                             ? "bg-ok text-white"
-                            : "border border-[var(--line)] bg-white text-ink/40"
+                            : "border border-(--line) bg-white text-ink/40"
                         }`}
                         aria-hidden
                       >
@@ -169,7 +169,7 @@ export default function SignupPage() {
 
           <fieldset className="space-y-2 text-sm">
             <legend className="mb-1 font-medium text-ink/80">Role</legend>
-            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[var(--line)] bg-white/70 px-3 py-3">
+            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-(--line) bg-white/70 px-3 py-3">
               <input
                 type="radio"
                 name="role"
@@ -182,7 +182,7 @@ export default function SignupPage() {
                 <span className="mt-0.5 block text-ink/55">Suggest and upvote events</span>
               </span>
             </label>
-            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[var(--line)] bg-white/70 px-3 py-3">
+            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-(--line) bg-white/70 px-3 py-3">
               <input
                 type="radio"
                 name="role"

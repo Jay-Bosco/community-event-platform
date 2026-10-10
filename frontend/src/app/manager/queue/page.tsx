@@ -52,7 +52,7 @@ function Queue() {
       {loading ? (
         <p className="text-sm text-ink/50">Loading…</p>
       ) : events.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-[var(--line)] bg-white/60 px-5 py-10 text-sm text-ink/50">
+        <p className="rounded-2xl border border-dashed border-(--line) bg-white/60 px-5 py-10 text-sm text-ink/50">
           No pending suggestions.
         </p>
       ) : (
@@ -62,11 +62,11 @@ function Queue() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 space-y-1">
                   <h2 className="font-display text-lg font-semibold text-ink sm:text-xl">{event.title}</h2>
-                  <p className="text-sm leading-relaxed text-ink/65 break-words">{event.description}</p>
+                  <p className="text-sm leading-relaxed text-ink/65 wrap-break-word">{event.description}</p>
                 </div>
                 <StatusBadge status={event.status} />
               </div>
-              <p className="mt-3 text-sm text-ink/55 break-words">
+              <p className="mt-3 text-sm text-ink/55 wrap-break-word">
                 <span className="font-medium text-ink/80">{event.venue_name}</span>
                 {" · "}
                 {event.upvote_count} upvotes · suggested by {event.suggester_name} ·{" "}

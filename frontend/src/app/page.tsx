@@ -70,7 +70,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(13,31,26,0.2),rgba(13,31,26,0.55)_55%,rgba(13,31,26,0.92))]" />
       </div>
 
-      <div className="page-shell relative flex min-h-[100dvh] flex-col justify-center pb-8 pt-20 md:justify-end md:pb-24 md:pt-28">
+      <div className="page-shell relative flex min-h-dvh flex-col justify-center pb-8 pt-20 md:justify-end md:pb-24 md:pt-28">
         <div className="max-w-xl">
           <p className="rise font-display text-[2.6rem] font-bold leading-[0.95] text-white sm:text-6xl md:text-7xl lg:text-8xl">
             Community
@@ -81,12 +81,12 @@ export default function HomePage() {
             From Ikeja to Yaba — Lagosians suggest the night. Venues green-light what rises to the top.
           </p>
           <div className="rise rise-delay-2 mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:max-w-md sm:flex-row">
-            <Link href="/login" className="btn btn-primary w-full sm:w-auto sm:min-w-[8.5rem]">
+            <Link href="/login" className="btn btn-primary w-full sm:w-auto sm:min-w-34">
               Log in
             </Link>
             <Link
               href="/signup"
-              className="btn w-full border border-white/25 bg-white/10 !text-white hover:bg-white/20 sm:w-auto sm:min-w-[8.5rem]"
+              className="btn w-full border border-white/25 bg-white/10 text-white! hover:bg-white/20 sm:w-auto sm:min-w-34"
             >
               Sign up
             </Link>

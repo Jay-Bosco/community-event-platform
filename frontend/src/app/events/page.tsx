@@ -82,11 +82,11 @@ function EventsList() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 space-y-1">
                   <h2 className="font-display text-lg font-semibold text-ink sm:text-xl">{event.title}</h2>
-                  <p className="text-sm leading-relaxed text-ink/65 break-words">{event.description}</p>
+                  <p className="text-sm leading-relaxed text-ink/65 wrap-break-word">{event.description}</p>
                 </div>
                 <StatusBadge status={event.status} />
               </div>
-              <dl className="mt-4 grid gap-2 text-sm text-ink/65 sm:grid-cols-2 break-words">
+              <dl className="mt-4 grid gap-2 text-sm text-ink/65 sm:grid-cols-2 wrap-break-word">
                 <div>
                   <dt className="inline text-ink/40">Venue </dt>
                   <dd className="inline font-medium text-ink/80">{event.venue_name}</dd>

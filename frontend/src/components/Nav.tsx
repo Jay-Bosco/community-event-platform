@@ -26,19 +26,19 @@ export function Nav() {
   const nameMuted = onHome ? "text-white/60" : "text-ink/45";
   const logoutBtn = onHome
     ? "border border-white/25 bg-white/10 hover:bg-white/20"
-    : "border border-[var(--line)] bg-white hover:bg-mist";
+    : "border border-(--line) bg-white hover:bg-mist";
   const menuBtn = onHome
     ? "border border-white/25 bg-white/10 text-white"
-    : "border border-[var(--line)] bg-white text-ink";
+    : "border border-(--line) bg-white text-ink";
 
   function NavLinks({ stacked }: { stacked?: boolean }) {
     if (!ready) return null;
 
     const item = stacked ? "block py-1" : "shrink-0";
-    const compact = stacked ? "w-full" : "!min-h-0 !px-3 !py-1.5 text-sm";
+    const compact = stacked ? "w-full" : "min-h-0! px-3! py-1.5! text-sm";
     const loginBtn = `btn btn-primary ${compact}`;
     const signupBtn = onHome
-      ? `btn ${compact} border border-white/25 bg-white/10 !text-white hover:bg-white/20`
+      ? `btn ${compact} border border-white/25 bg-white/10 text-white! hover:bg-white/20`
       : `btn btn-ghost ${compact}`;
 
     if (session) {
@@ -100,7 +100,7 @@ export function Nav() {
       className={`z-30 ${
         onHome
           ? "absolute inset-x-0 top-0 bg-transparent"
-          : "sticky top-0 border-b border-[var(--line)] bg-[color-mix(in_oklab,var(--foam)_82%,transparent)] backdrop-blur-md"
+          : "sticky top-0 border-b border-(--line) bg-[color-mix(in_oklab,var(--foam)_82%,transparent)] backdrop-blur-md"
       }`}
     >
       <div className="page-shell flex items-center justify-between gap-3 py-3 md:py-4">
@@ -145,7 +145,7 @@ export function Nav() {
           className={`border-t md:hidden ${
             onHome
               ? "border-white/15 bg-ink/95 text-white backdrop-blur-md"
-              : "border-[var(--line)] bg-foam/95 backdrop-blur-md"
+              : "border-(--line) bg-foam/95 backdrop-blur-md"
           }`}
         >
           <nav className="page-shell flex flex-col gap-3 py-4 text-sm font-medium">
