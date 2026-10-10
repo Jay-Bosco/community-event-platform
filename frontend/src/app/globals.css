@@ -72,6 +72,18 @@ body {
   font-family: var(--font-body), system-ui, sans-serif;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 h1,
 h2,
 h3,
@@ -88,8 +100,14 @@ button {
 }
 
 .page-shell {
-  width: min(72rem, calc(100% - 2rem));
+  width: min(72rem, calc(100% - 1.25rem));
   margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  .page-shell {
+    width: min(72rem, calc(100% - 2rem));
+  }
 }
 
 .btn {
@@ -99,6 +117,7 @@ button {
   gap: 0.5rem;
   border-radius: 0.7rem;
   padding: 0.7rem 1.15rem;
+  min-height: 2.75rem;
   font-size: 0.95rem;
   font-weight: 600;
   transition:
@@ -152,8 +171,12 @@ button {
 }
 
 .btn-ok {
-  background: var(--ok);
+  background: var(--leaf);
   color: white;
+}
+
+.btn-ok:hover {
+  background: var(--moss);
 }
 
 .field {
@@ -167,6 +190,7 @@ button {
 .field textarea {
   margin-top: 0.4rem;
   width: 100%;
+  min-height: 2.75rem;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
   background: white;
@@ -176,11 +200,35 @@ button {
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
+.field textarea {
+  min-height: 6.5rem;
+}
+
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
   border-color: color-mix(in oklab, var(--leaf) 55%, transparent);
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--leaf) 18%, transparent);
+}
+
+.field .datetime-input,
+.field input[type="date"],
+.field input[type="time"],
+.field input[type="datetime-local"] {
+  display: block;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: auto;
+  color-scheme: light;
+}
+
+.field input[type="date"]::-webkit-calendar-picker-indicator,
+.field input[type="time"]::-webkit-calendar-picker-indicator,
+.field input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
 }
 
 .panel {
@@ -194,7 +242,13 @@ button {
   border: 1px solid var(--line);
   border-radius: 1.1rem;
   background: white;
-  padding: 1.1rem 1.2rem;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .surface-list {
+    padding: 1.1rem 1.2rem;
+  }
 }
 
 .rise {

@@ -20,7 +20,6 @@ const ACTIVITY_EVENTS: Array<keyof WindowEventMap> = [
   "wheel",
 ];
 
-/** Tracks activity and signs out after idle timeout; no cross-tab session. */
 export function SessionGuard() {
   const router = useRouter();
   const pathname = usePathname();
@@ -30,7 +29,6 @@ export function SessionGuard() {
     const onActivity = () => {
       if (!getSession()) return;
       const now = Date.now();
-      // Throttle timer resets
       if (now - lastTouch.current < 1000) return;
       lastTouch.current = now;
       touchSessionActivity();

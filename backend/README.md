@@ -29,6 +29,8 @@ Password: `Password123!`
 | customer1@example.com | customer | |
 | customer2@example.com | customer | |
 | customer3@example.com | customer | |
+| customer4@example.com | customer | |
+| customer5@example.com | customer | |
 
 ## API
 
@@ -57,4 +59,4 @@ npm test
 
 ## Design notes
 
-See root README for architecture, assumptions, tradeoffs, and AI note. 
+See root README for architecture, assumptions, and tradeoffs. 

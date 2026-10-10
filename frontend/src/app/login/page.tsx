@@ -29,13 +29,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="page-shell py-10 sm:py-16">
+    <div className="page-shell py-8 sm:py-16">
       <div className="mx-auto max-w-md space-y-6">
         <div className="rise space-y-2">
-          <h1 className="font-display text-4xl font-bold text-ink">Log in</h1>
-          <p className="text-ink/60">Pick up where the Lagos crowd left off.</p>
+          <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">Log in</h1>
+          <p className="text-sm text-ink/60 sm:text-base">Pick up where the Lagos crowd left off.</p>
         </div>
-        <form onSubmit={onSubmit} className="panel rise rise-delay-1 space-y-4 p-5 sm:p-6">
+        <form onSubmit={onSubmit} className="panel rise rise-delay-1 space-y-4 p-4 sm:p-6">
           <label className="field">
             Email
             <input

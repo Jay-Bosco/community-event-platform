@@ -120,7 +120,7 @@ export async function register(input: {
     return session;
   }
 
-  // Always finish signup logged in — fall back to password login if tokens missing
+  // if register didn't return tokens, just log in
   return login(input.email, input.password);
 }
 

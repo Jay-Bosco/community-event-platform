@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-/**
- * Documents the duplicate-vote contract enforced by DB unique (user_id, event_id)
- * and surfaced as 409 DUPLICATE_VOTE by the votes service.
- */
+// one vote per user per event (same idea as the DB unique constraint)
 describe("vote integrity contract", () => {
   it("defines one vote per user per event", () => {
     const votes = new Set<string>();

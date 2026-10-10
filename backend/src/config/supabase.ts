@@ -17,7 +17,7 @@ if (!supabaseServiceRoleKey) {
   );
 }
 
-/** Anon client — verify incoming user access tokens. */
+// Used to verify JWTs
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: false,
@@ -25,7 +25,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
-/** Service-role client — bypasses RLS; server-side only. */
+// DB + admin auth (keep this off the frontend)
 export const supabaseAdmin = createClient(
   supabaseUrl,
   supabaseServiceRoleKey || supabaseAnonKey,

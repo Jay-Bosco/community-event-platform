@@ -21,7 +21,6 @@ app.use(helmet());
 app.use(
   cors({
     origin(origin, callback) {
-      // Allow non-browser clients (no Origin) and configured frontends
       if (!origin || corsOrigins.includes(origin)) {
         callback(null, true);
         return;

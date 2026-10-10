@@ -57,14 +57,16 @@ function EventsList() {
   }
 
   return (
-    <div className="page-shell space-y-8 py-8 sm:py-12">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+    <div className="page-shell space-y-6 py-6 sm:space-y-8 sm:py-12">
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
         <div className="space-y-2">
-          <h1 className="font-display text-4xl font-bold text-ink">Suggested events</h1>
-          <p className="max-w-xl text-ink/60">Browse ideas, check status, and upvote what you want next.</p>
+          <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">Suggested events</h1>
+          <p className="max-w-xl text-sm text-ink/60 sm:text-base">
+            Browse ideas, check status, and upvote what you want next.
+          </p>
         </div>
         {role === "customer" && (
-          <Link href="/events/new" className="btn btn-dark">
+          <Link href="/events/new" className="btn btn-dark w-full sm:w-auto">
             Suggest event
           </Link>
         )}
@@ -79,12 +81,12 @@ function EventsList() {
             <li key={event.id} className="surface-list">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 space-y-1">
-                  <h2 className="font-display text-xl font-semibold text-ink">{event.title}</h2>
-                  <p className="text-sm leading-relaxed text-ink/65">{event.description}</p>
+                  <h2 className="font-display text-lg font-semibold text-ink sm:text-xl">{event.title}</h2>
+                  <p className="text-sm leading-relaxed text-ink/65 break-words">{event.description}</p>
                 </div>
                 <StatusBadge status={event.status} />
               </div>
-              <dl className="mt-4 grid gap-2 text-sm text-ink/65 sm:grid-cols-2">
+              <dl className="mt-4 grid gap-2 text-sm text-ink/65 sm:grid-cols-2 break-words">
                 <div>
                   <dt className="inline text-ink/40">Venue </dt>
                   <dd className="inline font-medium text-ink/80">{event.venue_name}</dd>
@@ -109,7 +111,7 @@ function EventsList() {
                   type="button"
                   disabled={busyId === event.id}
                   onClick={() => void toggleVote(event)}
-                  className={`btn mt-4 ${
+                  className={`btn mt-4 w-full sm:w-auto ${
                     event.viewerHasVoted ? "btn-primary" : "btn-ghost"
                   }`}
                 >

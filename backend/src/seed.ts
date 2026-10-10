@@ -1,10 +1,4 @@
-/**
- * Seed script — creates 2 managers, 2 venues, 3 customers, mixed events + votes.
- * Lagos / Nigeria flavoured demo data.
- * Requires schema.sql applied and SUPABASE_* env vars set.
- *
- * Usage: npm run seed
- */
+// seed demo users + Lagos venues/events. needs schema + env. run: npm run seed
 import dotenv from "dotenv";
 import { supabaseAdmin } from "./config/supabase";
 
@@ -24,6 +18,8 @@ const USERS: SeedUser[] = [
   { email: "customer1@example.com", display_name: "Aisha Bello", role: "customer" },
   { email: "customer2@example.com", display_name: "Emeka Nwosu", role: "customer" },
   { email: "customer3@example.com", display_name: "Funke Adeyemi", role: "customer" },
+  { email: "customer4@example.com", display_name: "Kemi Olawale", role: "customer" },
+  { email: "customer5@example.com", display_name: "Sola Ibrahim", role: "customer" },
 ];
 
 async function findOrCreateUser(u: SeedUser): Promise<string> {
@@ -65,6 +61,12 @@ async function findOrCreateUser(u: SeedUser): Promise<string> {
   return userId;
 }
 
+function byTitle(events: Array<{ id: string; title: string }>, prefix: string) {
+  const hit = events.find((e) => e.title.startsWith(prefix));
+  if (!hit) throw new Error(`Seed event missing: ${prefix}`);
+  return hit;
+}
+
 async function main() {
   console.log("Seeding Community Event Platform (Lagos)…\n");
 
@@ -73,7 +75,7 @@ async function main() {
     ids[u.email] = await findOrCreateUser(u);
   }
 
-  // Clear dependent data for a clean demo (order matters)
+  // wipe old demo rows first
   await supabaseAdmin.from("votes").delete().neq("user_id", "00000000-0000-0000-0000-000000000000");
   await supabaseAdmin.from("events").delete().neq("id", "00000000-0000-0000-0000-000000000000");
   await supabaseAdmin.from("venues").delete().neq("id", "00000000-0000-0000-0000-000000000000");
@@ -106,6 +108,8 @@ async function main() {
   const c1 = ids["customer1@example.com"];
   const c2 = ids["customer2@example.com"];
   const c3 = ids["customer3@example.com"];
+  const c4 = ids["customer4@example.com"];
+  const c5 = ids["customer5@example.com"];
 
   const now = Date.now();
   const day = 24 * 60 * 60 * 1000;
@@ -126,10 +130,29 @@ async function main() {
       {
         title: "Lagos Developers Meetup",
         description:
-          "Talks on mobile money APIs and side projects. Laptops welcome; Mentors from Yaba.",
+          "Talks on mobile money APIs and side projects. Laptops welcome; mentors from Yaba.",
         proposed_at: new Date(now + 21 * day).toISOString(),
         venue_id: ikeja.id,
         suggested_by: c2,
+        status: "pending",
+        upvote_count: 0,
+      },
+      {
+        title: "Allen Avenue Food Pop-up",
+        description:
+          "Small-chop stalls and soft drinks after office hours. Family-friendly.",
+        proposed_at: new Date(now + 12 * day).toISOString(),
+        venue_id: ikeja.id,
+        suggested_by: c4,
+        status: "pending",
+        upvote_count: 0,
+      },
+      {
+        title: "Saturday Morning Yoga",
+        description: "Beginner session in the courtyard before the mall gets busy.",
+        proposed_at: new Date(now + 9 * day).toISOString(),
+        venue_id: ikeja.id,
+        suggested_by: c5,
         status: "pending",
         upvote_count: 0,
       },
@@ -144,9 +167,26 @@ async function main() {
         upvote_count: 0,
       },
       {
+        title: "UI/UX Design Critique",
+        description: "Bring a Figma file or phone prototype — friendly feedback from peers.",
+        proposed_at: new Date(now + 16 * day).toISOString(),
+        venue_id: yaba.id,
+        suggested_by: c2,
+        status: "pending",
+        upvote_count: 0,
+      },
+      {
+        title: "Surulere Film Club Screening",
+        description: "Nollywood short films + short discussion. Seating is limited.",
+        proposed_at: new Date(now + 18 * day).toISOString(),
+        venue_id: yaba.id,
+        suggested_by: c3,
+        status: "pending",
+        upvote_count: 0,
+      },
+      {
         title: "Tejuosho Weekend Market Walk",
-        description:
-          "Already approved — stroll Tejuosho with local makers and fabric stalls.",
+        description: "Approved — stroll Tejuosho with local makers and fabric stalls.",
         proposed_at: new Date(now + 7 * day).toISOString(),
         venue_id: yaba.id,
         suggested_by: c3,
@@ -154,12 +194,29 @@ async function main() {
         upvote_count: 0,
       },
       {
+        title: "Lekki Art & Craft Fair",
+        description: "Approved showcase of painters and beadwork — weekend afternoon.",
+        proposed_at: new Date(now + 11 * day).toISOString(),
+        venue_id: ikeja.id,
+        suggested_by: c4,
+        status: "approved",
+        upvote_count: 0,
+      },
+      {
         title: "All-Night Drum Session",
-        description:
-          "Rejected seed example — too loud for nearby Allen Avenue residents after 10pm.",
+        description: "Rejected — too loud for nearby Allen Avenue residents after 10pm.",
         proposed_at: new Date(now + 5 * day).toISOString(),
         venue_id: ikeja.id,
         suggested_by: c2,
+        status: "rejected",
+        upvote_count: 0,
+      },
+      {
+        title: "Midnight Hackathon",
+        description: "Rejected — hall booking ends at 9pm; overnight use not allowed.",
+        proposed_at: new Date(now + 8 * day).toISOString(),
+        venue_id: yaba.id,
+        suggested_by: c5,
         status: "rejected",
         upvote_count: 0,
       },
@@ -170,20 +227,46 @@ async function main() {
     throw new Error(`Failed to create events: ${eventError?.message}`);
   }
 
-  // Afrobeats: 3 votes (sorts first in Ikeja queue)
-  // Developers Meetup: 1 vote
-  // Open Mic: 2 votes
-  const afrobeats = events.find((e) => e.title.startsWith("Afrobeats"));
-  const meetup = events.find((e) => e.title.startsWith("Lagos Developers"));
-  const mic = events.find((e) => e.title.startsWith("Yaba Open"));
+  const afrobeats = byTitle(events, "Afrobeats");
+  const meetup = byTitle(events, "Lagos Developers");
+  const food = byTitle(events, "Allen Avenue");
+  const yoga = byTitle(events, "Saturday Morning");
+  const mic = byTitle(events, "Yaba Open");
+  const critique = byTitle(events, "UI/UX");
+  const film = byTitle(events, "Surulere Film");
+  const market = byTitle(events, "Tejuosho");
+  const art = byTitle(events, "Lekki Art");
+  const drums = byTitle(events, "All-Night");
+  const hack = byTitle(events, "Midnight Hackathon");
 
+  // vote counts for queue sorting (pending ones matter most)
   const votePairs: Array<[string, string]> = [
-    [c1, afrobeats!.id],
-    [c2, afrobeats!.id],
-    [c3, afrobeats!.id],
-    [c1, meetup!.id],
-    [c2, mic!.id],
-    [c3, mic!.id],
+    [c1, afrobeats.id],
+    [c2, afrobeats.id],
+    [c3, afrobeats.id],
+    [c4, afrobeats.id],
+    [c5, afrobeats.id],
+    [c1, meetup.id],
+    [c2, meetup.id],
+    [c1, food.id],
+    [c3, food.id],
+    [c4, food.id],
+    [c5, food.id],
+    [c2, yoga.id],
+    [c2, mic.id],
+    [c3, mic.id],
+    [c4, mic.id],
+    [c1, critique.id],
+    [c2, critique.id],
+    [c3, critique.id],
+    [c5, critique.id],
+    [c1, film.id],
+    [c4, film.id],
+    [c1, market.id],
+    [c2, market.id],
+    [c3, art.id],
+    [c1, drums.id],
+    [c2, hack.id],
   ];
 
   for (const [userId, eventId] of votePairs) {
@@ -194,17 +277,31 @@ async function main() {
     if (error) throw new Error(`Vote insert failed: ${error.message}`);
   }
 
-  await supabaseAdmin.from("events").update({ upvote_count: 3 }).eq("id", afrobeats!.id);
-  await supabaseAdmin.from("events").update({ upvote_count: 1 }).eq("id", meetup!.id);
-  await supabaseAdmin.from("events").update({ upvote_count: 2 }).eq("id", mic!.id);
+  const counts: Array<[string, number]> = [
+    [afrobeats.id, 5],
+    [meetup.id, 2],
+    [food.id, 4],
+    [yoga.id, 1],
+    [mic.id, 3],
+    [critique.id, 4],
+    [film.id, 2],
+    [market.id, 2],
+    [art.id, 1],
+    [drums.id, 1],
+    [hack.id, 1],
+  ];
 
+  for (const [id, upvote_count] of counts) {
+    const { error } = await supabaseAdmin.from("events").update({ upvote_count }).eq("id", id);
+    if (error) throw new Error(`Failed to set upvote_count: ${error.message}`);
+  }
+
+  console.log(`  events: ${events.length} (mixed pending / approved / rejected)`);
   console.log("\nSeed complete.\n");
   console.log("Login accounts (password for all: Password123!):");
   console.log("  manager1@example.com  — Ikeja City Mall Courtyard");
   console.log("  manager2@example.com  — Yaba Tech Hub Hall");
-  console.log("  customer1@example.com");
-  console.log("  customer2@example.com");
-  console.log("  customer3@example.com");
+  console.log("  customer1@example.com … customer5@example.com");
 }
 
 main().catch((err) => {

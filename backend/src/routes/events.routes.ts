@@ -58,7 +58,7 @@ router.post(
         throw new AppError("Target venue not found", 404);
       }
 
-      // Auto-enters manager queue as pending on creation.
+      // status defaults to pending → shows up in the manager queue
       const event = await createEvent({
         title: body.title,
         description: body.description,

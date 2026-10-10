@@ -42,10 +42,10 @@ function Queue() {
   }
 
   return (
-    <div className="page-shell space-y-8 py-8 sm:py-12">
+    <div className="page-shell space-y-6 py-6 sm:space-y-8 sm:py-12">
       <div className="space-y-2">
-        <h1 className="font-display text-4xl font-bold text-ink">Approval queue</h1>
-        <p className="max-w-xl text-ink/60">
+        <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">Approval queue</h1>
+        <p className="max-w-xl text-sm text-ink/60 sm:text-base">
           Pending suggestions for your venue(s), highest upvotes first.
         </p>
       </div>
@@ -61,23 +61,23 @@ function Queue() {
             <li key={event.id} className="surface-list">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 space-y-1">
-                  <h2 className="font-display text-xl font-semibold text-ink">{event.title}</h2>
-                  <p className="text-sm leading-relaxed text-ink/65">{event.description}</p>
+                  <h2 className="font-display text-lg font-semibold text-ink sm:text-xl">{event.title}</h2>
+                  <p className="text-sm leading-relaxed text-ink/65 break-words">{event.description}</p>
                 </div>
                 <StatusBadge status={event.status} />
               </div>
-              <p className="mt-3 text-sm text-ink/55">
+              <p className="mt-3 text-sm text-ink/55 break-words">
                 <span className="font-medium text-ink/80">{event.venue_name}</span>
                 {" · "}
                 {event.upvote_count} upvotes · suggested by {event.suggester_name} ·{" "}
                 {new Date(event.proposed_at).toLocaleString()}
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                 <button
                   type="button"
                   disabled={busyId === event.id}
                   onClick={() => void act(event.id, "approve")}
-                  className="btn btn-ok"
+                  className="btn btn-ok w-full sm:w-auto"
                 >
                   Approve
                 </button>
@@ -85,7 +85,7 @@ function Queue() {
                   type="button"
                   disabled={busyId === event.id}
                   onClick={() => void act(event.id, "reject")}
-                  className="btn btn-danger"
+                  className="btn btn-danger w-full sm:w-auto"
                 >
                   Reject
                 </button>

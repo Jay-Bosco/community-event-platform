@@ -9,7 +9,6 @@ export type FlashMessage = {
 const EVENT = "cep-flash";
 
 let seq = 0;
-/** In-memory pending flash for same-tab client navigations (not persisted). */
 let pending: { kind: FlashKind; text: string } | null = null;
 
 function emit(kind: FlashKind, text: string) {
@@ -18,7 +17,6 @@ function emit(kind: FlashKind, text: string) {
   window.dispatchEvent(new CustomEvent(EVENT, { detail: message }));
 }
 
-/** Show immediately (same page). */
 export const flash = {
   success(text: string) {
     emit("success", text);
@@ -26,7 +24,7 @@ export const flash = {
   error(text: string) {
     emit("error", text);
   },
-  /** Survives in-memory navigation — shown once on the next page. */
+  // show after the next navigation
   successNext(text: string) {
     pending = { kind: "success", text };
   },
@@ -43,7 +41,6 @@ export function subscribeFlash(handler: (msg: FlashMessage) => void) {
   return () => window.removeEventListener(EVENT, onFlash);
 }
 
-/** Call once on mount to surface any pending cross-page flash. */
 export function consumePendingFlash() {
   if (!pending) return;
   const next = pending;

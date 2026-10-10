@@ -1,8 +1,6 @@
--- Community Event Platform schema
--- Run in Supabase SQL Editor after creating a project.
--- Disable Auth > Providers > Email > "Confirm email" for local/challenge signup without mailbox.
+-- schema for the community event platform
 
--- Profiles (1:1 with auth.users)
+-- profiles (links to auth.users)
 create table if not exists public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   email text not null unique,
@@ -50,11 +48,8 @@ create table if not exists public.votes (
 
 create index if not exists votes_event_id_idx on public.votes (event_id);
 
--- API is the only data boundary: block direct table access for anon/authenticated.
+-- rls on; no policies, so only service_role (express) can touch these
 alter table public.profiles enable row level security;
 alter table public.venues enable row level security;
 alter table public.events enable row level security;
 alter table public.votes enable row level security;
-
--- No policies for anon/authenticated → only service_role can read/write.
--- (service_role bypasses RLS)

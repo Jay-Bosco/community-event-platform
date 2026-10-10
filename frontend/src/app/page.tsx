@@ -1,18 +1,30 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getSession } from "@/lib/session";
 
 export default function HomePage() {
   const router = useRouter();
+  const [showLanding, setShowLanding] = useState(false);
 
   useEffect(() => {
     const session = getSession();
-    if (!session) return;
-    router.replace(session.user.role === "venue_manager" ? "/manager/queue" : "/events");
+    if (session) {
+      router.replace(session.user.role === "venue_manager" ? "/manager/queue" : "/events");
+      return;
+    }
+    setShowLanding(true);
   }, [router]);
+
+  if (!showLanding) {
+    return (
+      <div className="page-shell py-16">
+        <p className="text-sm text-ink/50">Loading…</p>
+      </div>
+    );
+  }
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-ink text-foam">
@@ -58,22 +70,27 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(13,31,26,0.2),rgba(13,31,26,0.55)_55%,rgba(13,31,26,0.92))]" />
       </div>
 
-      <div className="page-shell relative flex min-h-screen flex-col justify-end pb-16 pt-28 sm:pb-24">
-        <p className="rise font-display text-5xl font-bold leading-[0.95] text-white sm:text-7xl md:text-8xl">
-          Community
-          <br />
-          Events
-        </p>
-        <p className="rise rise-delay-1 mt-5 max-w-xl text-base text-white/75 sm:text-lg">
-          From Ikeja to Yaba — Lagosians suggest the night. Venues green-light what rises to the top.
-        </p>
-        <div className="rise rise-delay-2 mt-8 flex flex-wrap gap-3">
-          <Link href="/login" className="btn btn-primary">
-            Log in
-          </Link>
-          <Link href="/signup" className="btn btn-ghost border-white/25 bg-white/10 text-white hover:bg-white/20">
-            Sign up
-          </Link>
+      <div className="page-shell relative flex min-h-[100dvh] flex-col justify-center pb-8 pt-20 md:justify-end md:pb-24 md:pt-28">
+        <div className="max-w-xl">
+          <p className="rise font-display text-[2.6rem] font-bold leading-[0.95] text-white sm:text-6xl md:text-7xl lg:text-8xl">
+            Community
+            <br />
+            Events
+          </p>
+          <p className="rise rise-delay-1 mt-4 text-sm leading-relaxed text-white/75 sm:mt-5 sm:text-lg">
+            From Ikeja to Yaba — Lagosians suggest the night. Venues green-light what rises to the top.
+          </p>
+          <div className="rise rise-delay-2 mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:max-w-md sm:flex-row">
+            <Link href="/login" className="btn btn-primary w-full sm:w-auto sm:min-w-[8.5rem]">
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="btn w-full border border-white/25 bg-white/10 !text-white hover:bg-white/20 sm:w-auto sm:min-w-[8.5rem]"
+            >
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
     </section>

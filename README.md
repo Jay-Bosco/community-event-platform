@@ -54,8 +54,10 @@ Password for **all**: `Password123!`
 | customer1@example.com | customer | suggest / upvote |
 | customer2@example.com | customer | |
 | customer3@example.com | customer | |
+| customer4@example.com | customer | |
+| customer5@example.com | customer | |
 
-Seed includes pending / approved / rejected events with different upvote counts so the manager queue sort is obvious.
+Seed includes more Lagos events (pending / approved / rejected) with uneven upvote counts so the manager queue sort is obvious.
 
 ### Tests
 
@@ -114,14 +116,14 @@ Covers vote uniqueness, role guards, and status transitions.
 
 - **Supabase cloud** instead of local SQLite — real Postgres + Auth; shared project credentials are provided for evaluators.
 - **Denormalized `upvote_count`** — simple sorting; a trigger/RPC would be stricter under concurrency.
-- **No realtime** — refresh/poll is enough for the challenge.
+- **No realtime** — refresh/poll
 - **No Docker** in v1 — root `npm run setup && npm run seed && npm run dev` is the path.
 - **UI** is usable, not pixel-perfect.
 
-With more time: Docker Compose, transactional vote RPC, deploy link, short demo video.
+With more time I’d harden vote counting under concurrency, add clearer empty states for managers without venues, tighten validation messages, and polish UI and mobile layouts a bit more.
 
-## AI assistance
+## Tools
 
-Cursor helped scaffold Express/Next layout, draft schema/routes/seed stubs, and iterate on UI/session UX. Product decisions (auto-pending queue, API-as-boundary, venue-scoped manager actions, Lagos seed) were specified and reviewed. Every line submitted is understood and walkthrough-ready.
+I used Cursor for some scaffolding and boilerplate (routes and seed stub). Core decisions, authentication, and the flows were done and reviewed by me.
 
-More package detail: [`backend/README.md`](./backend/README.md), [`frontend/README.md`](./frontend/README.md).
+More detail: [`backend/README.md`](./backend/README.md), [`frontend/README.md`](./frontend/README.md).

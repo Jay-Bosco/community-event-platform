@@ -45,14 +45,12 @@ function tokensFromSession(session: {
   };
 }
 
-// POST /api/auth/register
 router.post("/register", async (req, res) => {
   try {
     const body = registerSchema.parse(req.body);
     const email = body.email.toLowerCase();
 
-    // Admin createUser avoids signup email rate limits / confirmation mail.
-    // Matches challenge assumption: email/password, no verification.
+    // createUser so we don't hit signup email limits
     const { data: created, error: createError } =
       await supabaseAdmin.auth.admin.createUser({
         email,
@@ -80,12 +78,12 @@ router.post("/register", async (req, res) => {
         display_name: body.display_name,
       });
     } catch (profileErr) {
-      // Roll back orphaned auth user if profile insert fails
+      // don't leave a user without a profile
       await supabaseAdmin.auth.admin.deleteUser(created.user.id);
       throw profileErr;
     }
 
-    // Mint a session immediately so the client can stay logged in after signup
+    // sign in right away so signup returns tokens
     let session = (
       await supabase.auth.signInWithPassword({
         email,
@@ -94,7 +92,7 @@ router.post("/register", async (req, res) => {
     ).data.session;
 
     if (!session) {
-      // brief retry — GoTrue can lag right after admin.createUser
+      // sometimes auth needs a beat after createUser
       await new Promise((r) => setTimeout(r, 250));
       const retry = await supabase.auth.signInWithPassword({
         email,
@@ -123,7 +121,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
     const body = loginSchema.parse(req.body);
@@ -151,7 +148,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// POST /api/auth/refresh
 router.post("/refresh", async (req, res) => {
   try {
     const body = refreshSchema.parse(req.body);
@@ -177,7 +173,6 @@ router.post("/refresh", async (req, res) => {
   }
 });
 
-// GET /api/auth/me
 router.get("/me", authenticateToken, loadProfile, (req: AuthRequest, res) => {
   return sendOk(res, { user: req.profile });
 });
