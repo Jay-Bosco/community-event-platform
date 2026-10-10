@@ -29,7 +29,10 @@ export default function HomePage() {
   return (
     <section className="relative min-h-screen overflow-hidden bg-ink text-foam">
       <div className="absolute inset-0">
-        <div className="hero-drift absolute inset-0 bg-[radial-gradient(ellipse_at_20%_20%,#2a5c4a_0%,transparent_45%),radial-gradient(ellipse_at_80%_10%,#e07a5f33_0%,transparent_35%),linear-gradient(160deg,#0d1f1a_0%,#17352c_48%,#0a1814_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(160deg,#0d1f1a_0%,#17352c_48%,#0a1814_100%)]" />
+        <div className="bg-orb bg-orb-a absolute -left-[15%] top-[-5%] h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle,rgba(42,92,74,0.55),transparent_68%)]" />
+        <div className="bg-orb bg-orb-b absolute -right-[10%] top-[5%] h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,rgba(224,122,95,0.28),transparent_70%)]" />
+        <div className="bg-orb bg-orb-c absolute bottom-[10%] left-[25%] h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(42,92,74,0.35),transparent_72%)]" />
         <svg
           className="absolute inset-0 h-full w-full opacity-40"
           viewBox="0 0 1440 900"
@@ -54,17 +57,17 @@ export default function HomePage() {
           <rect x="1040" y="390" width="80" height="220" rx="8" fill="#1c4034" />
           <circle cx="360" cy="360" r="18" fill="#e07a5f" opacity="0.7" />
           <circle cx="1080" cy="360" r="18" fill="#e07a5f" opacity="0.7" />
-          <g opacity="0.35" fill="#e4efe9">
-            <circle cx="480" cy="640" r="10" />
-            <circle cx="520" cy="655" r="8" />
-            <circle cx="560" cy="640" r="11" />
-            <circle cx="610" cy="650" r="9" />
-            <circle cx="660" cy="638" r="10" />
-            <circle cx="720" cy="648" r="12" />
-            <circle cx="780" cy="640" r="9" />
-            <circle cx="830" cy="652" r="10" />
-            <circle cx="880" cy="642" r="8" />
-            <circle cx="930" cy="650" r="11" />
+          <g className="hero-crowd" opacity="0.35" fill="#e4efe9">
+            <circle className="hero-dot" cx="480" cy="640" r="10" />
+            <circle className="hero-dot" cx="520" cy="655" r="8" />
+            <circle className="hero-dot" cx="560" cy="640" r="11" />
+            <circle className="hero-dot" cx="610" cy="650" r="9" />
+            <circle className="hero-dot" cx="660" cy="638" r="10" />
+            <circle className="hero-dot" cx="720" cy="648" r="12" />
+            <circle className="hero-dot" cx="780" cy="640" r="9" />
+            <circle className="hero-dot" cx="830" cy="652" r="10" />
+            <circle className="hero-dot" cx="880" cy="642" r="8" />
+            <circle className="hero-dot" cx="930" cy="650" r="11" />
           </g>
         </svg>
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(13,31,26,0.2),rgba(13,31,26,0.55)_55%,rgba(13,31,26,0.92))]" />

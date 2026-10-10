@@ -35,8 +35,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${body.variable} ${display.variable} min-h-screen antialiased`}>
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          <div className="absolute -left-24 top-[-10%] h-112 w-md rounded-full bg-[radial-gradient(circle,rgba(42,92,74,0.16),transparent_68%)]" />
-          <div className="absolute right-[-8%] top-[20%] h-88 w-88 rounded-full bg-[radial-gradient(circle,rgba(224,122,95,0.16),transparent_70%)]" />
+          <div className="bg-orb bg-orb-a absolute -left-24 top-[-10%] h-112 w-md rounded-full bg-[radial-gradient(circle,rgba(42,92,74,0.16),transparent_68%)]" />
+          <div className="bg-orb bg-orb-b absolute right-[-8%] top-[20%] h-88 w-88 rounded-full bg-[radial-gradient(circle,rgba(224,122,95,0.16),transparent_70%)]" />
+          <div className="bg-orb bg-orb-c absolute bottom-[-12%] left-[35%] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(42,92,74,0.1),transparent_70%)]" />
           <div
             className="absolute inset-0 opacity-[0.035]"
             style={{
